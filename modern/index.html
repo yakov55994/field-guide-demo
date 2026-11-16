@@ -1,0 +1,727 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>מדריך שטח: מודרני</title>
+<meta name="description" content="גרסת הדגמה: נהלים, אנשי קשר וסרטוני הדרכה למתנדבי סיוע בדרכים">
+<meta name="theme-color" content="#EDF0F2" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0A1822" media="(prefers-color-scheme: dark)">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Hebrew:wght@400;500;600;700&family=Karantina:wght@400;700&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/@phosphor-icons/web@2.1.1"></script>
+<style>
+/* Radius system: surfaces 12px, controls (chips, buttons, inputs) full pill, rows 0. */
+:root{
+  --bg:#EDF0F2; --surface:#F8F9FA; --sunken:#E2E7EA;
+  --ink:#10283A; --text:#1E3343; --muted:#536673; --line:#D2DADF;
+  --brand:#0F4260; --accent:#F6A43A; --accent-ink:#2A1700; --accent-soft:#FBE3C2;
+  --danger:#B8321E; --danger-soft:#F7DED9;
+  --wa:#0E7A3F; --wa-ink:#FFFFFF;
+  --shadow:0 1px 0 rgba(16,40,58,.04), 0 8px 24px -12px rgba(16,40,58,.18);
+  --r:12px; --pill:999px;
+  --display:"Karantina", "IBM Plex Sans Hebrew", sans-serif;
+  --body:"IBM Plex Sans Hebrew", system-ui, sans-serif;
+  --side:272px;
+  color-scheme:light;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#0A1822; --surface:#10222F; --sunken:#0D1D28;
+    --ink:#EAF1F5; --text:#D3DEE5; --muted:#8FA3B1; --line:#1F3647;
+    --brand:#8CC3E6; --accent:#F9B24F; --accent-ink:#2A1700; --accent-soft:#3A2A12;
+    --danger:#FF8A73; --danger-soft:#3A1A15;
+    --wa:#2BBF6A; --wa-ink:#05200F;
+    --shadow:0 1px 0 rgba(0,0,0,.2), 0 10px 30px -14px rgba(0,0,0,.6);
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0A1822; --surface:#10222F; --sunken:#0D1D28;
+  --ink:#EAF1F5; --text:#D3DEE5; --muted:#8FA3B1; --line:#1F3647;
+  --brand:#8CC3E6; --accent:#F9B24F; --accent-ink:#2A1700; --accent-soft:#3A2A12;
+  --danger:#FF8A73; --danger-soft:#3A1A15;
+  --wa:#2BBF6A; --wa-ink:#05200F;
+  --shadow:0 1px 0 rgba(0,0,0,.2), 0 10px 30px -14px rgba(0,0,0,.6);
+  color-scheme:dark;
+}
+
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%; scroll-padding-top:88px}
+body{margin:0; background:var(--bg); color:var(--text); font:400 16px/1.6 var(--body); -webkit-font-smoothing:antialiased}
+a{color:inherit}
+button{font:inherit; color:inherit}
+:focus-visible{outline:3px solid var(--accent); outline-offset:2px; border-radius:6px}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+i.ph,i.ph-fill,i.ph-bold{font-size:1.25em; line-height:1; flex:none}
+
+/* ---------- shell ---------- */
+.shell{min-height:100dvh}
+.side{display:none}
+.topbar{position:sticky; top:0; z-index:20; display:flex; align-items:center; gap:12px; padding:10px 16px; padding-top:max(10px, env(safe-area-inset-top));
+  background:color-mix(in srgb, var(--bg) 88%, transparent); backdrop-filter:blur(14px) saturate(140%); -webkit-backdrop-filter:blur(14px) saturate(140%); border-bottom:1px solid var(--line)}
+.brand{display:flex; align-items:center; gap:10px; text-decoration:none; margin-inline-end:auto}
+.brand img{width:34px; height:34px}
+.brand .mark{display:grid; place-items:center; width:34px; height:34px; border-radius:10px; background:var(--accent); color:var(--accent-ink); font-size:22px}
+.side .brand .mark{width:40px; height:40px; font-size:26px}
+.brand .badge{align-self:center}
+.brand b{white-space:nowrap}
+.brand b{font:700 30px/1 var(--display); color:var(--ink); letter-spacing:.01em; padding-top:4px}
+.iconbtn{display:inline-grid; place-items:center; width:42px; height:42px; border-radius:var(--pill); border:1px solid var(--line); background:var(--surface); cursor:pointer; color:var(--ink)}
+.iconbtn:hover{border-color:var(--muted)}
+.iconbtn:active{transform:scale(.96)}
+
+main{padding:20px 16px calc(96px + env(safe-area-inset-bottom)); max-width:920px; margin-inline:auto}
+
+.tabbar{position:fixed; inset-inline:0; bottom:0; z-index:20; display:grid; grid-template-columns:repeat(5,1fr);
+  background:color-mix(in srgb, var(--surface) 94%, transparent); backdrop-filter:blur(14px); -webkit-backdrop-filter:blur(14px);
+  border-top:1px solid var(--line); padding-bottom:env(safe-area-inset-bottom)}
+.tabbar a{display:flex; flex-direction:column; align-items:center; gap:2px; padding:9px 2px 8px; text-decoration:none; font-size:12px; font-weight:500; color:var(--muted)}
+.tabbar a i{font-size:24px}
+.tabbar a[aria-current="page"]{color:var(--ink)}
+.tabbar a[aria-current="page"] i{color:var(--ink)}
+.tabbar a[aria-current="page"] span{text-decoration:underline 2px var(--accent); text-underline-offset:5px}
+
+@media (min-width:1024px){
+  .shell{display:grid; grid-template-columns:var(--side) 1fr}
+  .side{display:flex; flex-direction:column; position:sticky; top:0; height:100dvh; padding:22px 18px; border-inline-end:1px solid var(--line); background:var(--surface)}
+  .side .brand{margin:0 6px 20px}
+  .side .brand img{width:40px;height:40px}
+  .side .brand b{font-size:36px}
+  .side nav{display:flex; flex-direction:column; gap:2px}
+  .side nav a{display:flex; align-items:center; gap:12px; padding:10px 12px; border-radius:10px; text-decoration:none; font-weight:500; color:var(--muted)}
+  .side nav a:hover{background:var(--sunken); color:var(--ink)}
+  .side nav a[aria-current="page"]{background:var(--sunken); color:var(--ink)}
+  .side nav a[aria-current="page"] i{color:var(--ink)}
+  .side nav a small{margin-inline-start:auto; font-size:12px; color:var(--muted); font-variant-numeric:tabular-nums}
+  .side .sidefoot{margin-top:auto; display:grid; gap:8px}
+  .topbar{display:none}
+  html{scroll-padding-top:24px}
+  .sticky-tools{top:0 !important}
+  .sidetools{display:flex; gap:8px; margin:0 6px 18px}
+  .sidetools .iconbtn{flex:none}
+  .sidetools .find{flex:1; justify-content:flex-start; color:var(--muted); font-weight:500}
+  .sidetools .find kbd{margin-inline-start:auto; font:500 12px var(--body); border:1px solid var(--line); border-radius:6px; padding:1px 6px}
+  .tabbar{display:none}
+  main{padding:32px 40px 80px}
+}
+
+/* ---------- shared ---------- */
+.view{display:none}
+.view.on{display:block; animation:viewin .28s cubic-bezier(.2,.8,.2,1)}
+@keyframes viewin{from{opacity:0; transform:translateY(6px)}}
+h1,h2,h3{color:var(--ink); margin:0}
+.vh{font:700 clamp(44px,8vw,64px)/.95 var(--display); letter-spacing:.005em; margin:4px 0 6px}
+.vsub{color:var(--muted); margin:0 0 22px; max-width:60ch}
+.h2{font:700 34px/1 var(--display); margin:40px 0 14px}
+
+.btn{display:inline-flex; align-items:center; gap:8px; min-height:44px; padding:0 18px; border-radius:var(--pill); border:1px solid var(--line); background:var(--surface); text-decoration:none; font-weight:600; font-size:15px; cursor:pointer; color:var(--ink); white-space:nowrap; transition:background .15s, border-color .15s}
+.btn:hover{border-color:var(--muted)}
+.btn:active{transform:translateY(1px)}
+.btn.primary{background:var(--accent); border-color:var(--accent); color:var(--accent-ink)}
+.btn.primary:hover{filter:brightness(1.04)}
+.btn.wa{background:var(--wa); border-color:var(--wa); color:var(--wa-ink)}
+.btn.sm{min-height:40px; padding:0 14px; font-size:14px}
+
+.chips{display:flex; gap:8px; overflow-x:auto; scrollbar-width:none; padding:2px 16px 2px; margin-inline:-16px; scroll-snap-type:x proximity}
+.chips::-webkit-scrollbar{display:none}
+.chip{flex:none; scroll-snap-align:start; display:inline-flex; align-items:center; gap:6px; min-height:38px; padding:0 14px; border-radius:var(--pill); border:1px solid var(--line); background:var(--surface); font-size:14px; font-weight:500; cursor:pointer; color:var(--text); text-decoration:none; white-space:nowrap}
+.chip small{color:var(--muted); font-variant-numeric:tabular-nums}
+.chip[aria-pressed="true"], .chip.on{background:var(--ink); border-color:var(--ink); color:var(--bg)}
+.chip[aria-pressed="true"] small, .chip.on small{color:inherit; opacity:.7}
+@media (min-width:1024px){ .chips{flex-wrap:wrap; overflow:visible; margin:0; padding:0} }
+
+.sticky-tools{position:sticky; top:63px; z-index:10; background:var(--bg); padding:10px 0 12px; margin-bottom:6px}
+@media (min-width:1024px){ .sticky-tools{top:63px} }
+
+.badge{display:inline-flex; align-items:center; gap:4px; padding:2px 8px; border-radius:var(--pill); font-size:12px; font-weight:600; background:var(--sunken); color:var(--muted); white-space:nowrap}
+.badge.full{background:var(--accent-soft); color:var(--ink)}
+:root[data-theme="dark"] .badge.full{color:var(--accent)}
+@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]) .badge.full{color:var(--accent)} }
+
+.flash{animation:flash 1.6s ease-out}
+@keyframes flash{0%,30%{background:var(--accent-soft)}100%{background:transparent}}
+
+/* ---------- home ---------- */
+.hero{padding:6px 0 4px}
+.hero blockquote{margin:0; font:700 clamp(50px,12.5vw,96px)/.92 var(--display); color:var(--ink); letter-spacing:-.005em}
+.hero blockquote span{display:block}
+.hero p{margin:14px 0 0; color:var(--muted); max-width:48ch}
+@media (prefers-reduced-motion:no-preference){
+  .hero blockquote span{animation:rise .7s cubic-bezier(.2,.8,.2,1) both}
+  .hero blockquote span:nth-child(2){animation-delay:.08s}
+  .hero p,.searchbox{animation:rise .7s .16s cubic-bezier(.2,.8,.2,1) both}
+  @keyframes rise{from{opacity:0; transform:translateY(14px)}}
+}
+
+.searchbox{position:relative; margin:22px 0 14px}
+.searchbox i{position:absolute; inset-inline-start:18px; top:50%; transform:translateY(-50%); font-size:22px; color:var(--muted); pointer-events:none}
+.searchbox input{width:100%; height:60px; border-radius:var(--pill); border:1.5px solid var(--line); background:var(--surface); padding:0 54px 0 52px; font:500 17px var(--body); color:var(--ink); box-shadow:var(--shadow); -webkit-appearance:none; appearance:none}
+.searchbox input::placeholder{color:var(--muted)}
+.searchbox input:focus{outline:none; border-color:var(--accent)}
+.searchbox kbd{position:absolute; inset-inline-end:16px; top:50%; transform:translateY(-50%); font:500 12px var(--body); color:var(--muted); border:1px solid var(--line); border-radius:6px; padding:2px 7px}
+.searchbox .clear{position:absolute; inset-inline-end:10px; top:50%; transform:translateY(-50%); display:none}
+.searchbox.has .clear{display:inline-grid}
+.searchbox.has kbd{display:none}
+@media (hover:none){ .searchbox kbd{display:none} }
+
+.quick{display:flex; flex-wrap:wrap; gap:8px}
+
+.signs{display:grid; grid-template-columns:repeat(2,1fr); gap:1px; background:var(--line); border:1px solid var(--line); border-radius:var(--r); overflow:hidden; margin-top:34px}
+.sign{background:var(--surface); padding:16px 16px 14px; text-decoration:none; display:flex; flex-direction:column; gap:4px; min-height:132px}
+.sign:hover{background:var(--sunken)}
+.sign b{font:700 64px/.85 var(--display); color:var(--ink); font-variant-numeric:tabular-nums}
+.sign b small{font-size:.5em; margin-inline-start:4px; font-weight:400}
+.sign span{font-size:14px; line-height:1.4; color:var(--text)}
+.sign em{font-style:normal; font-size:12px; color:var(--muted); margin-top:auto}
+.sign:first-child{background:var(--accent); }
+.sign:first-child b, .sign:first-child span, .sign:first-child em{color:var(--accent-ink)}
+.sign:first-child:hover{filter:brightness(1.03)}
+@media (min-width:720px){ .signs{grid-template-columns:1.3fr 1fr 1fr 1fr} .sign b{font-size:76px} }
+
+.letter{display:grid; gap:18px; margin-top:40px; padding-top:28px; border-top:1px solid var(--line)}
+.letter p{margin:0 0 10px; max-width:62ch}
+.letter .who{font-weight:600; color:var(--ink)}
+@media (min-width:860px){ .letter{grid-template-columns:200px 1fr; gap:32px} }
+.letter h2{font:700 34px/1 var(--display)}
+
+.catlist{display:grid; grid-template-columns:1fr; gap:0; border-top:1px solid var(--line)}
+.catlist a{display:flex; align-items:center; gap:12px; padding:14px 2px; border-bottom:1px solid var(--line); text-decoration:none; font-weight:500; color:var(--ink)}
+.catlist a i:first-child{color:var(--muted); font-size:22px}
+.catlist a small{margin-inline-start:auto; color:var(--muted); font-variant-numeric:tabular-nums}
+.catlist a:hover{background:var(--sunken)}
+@media (min-width:720px){ .catlist{grid-template-columns:1fr 1fr; column-gap:28px} }
+
+.maphead{display:flex; align-items:baseline; justify-content:space-between; gap:12px}
+.maphead a{display:inline-flex; align-items:center; gap:4px; font-size:14px; font-weight:600; color:var(--muted); text-decoration:none}
+.maphead a:hover{color:var(--ink)}
+.maplink{margin:-8px 0 18px}
+.appstrip{display:grid; grid-template-columns:1fr; gap:10px}
+@media (min-width:720px){ .appstrip{grid-template-columns:repeat(3,1fr)} }
+.appstrip button{display:flex; align-items:center; gap:12px; text-align:start; padding:14px; border-radius:var(--r); border:1px solid var(--line); background:var(--surface); cursor:pointer; font-weight:500; line-height:1.35}
+.appstrip button:hover{border-color:var(--muted)}
+.appstrip button i{font-size:30px; color:var(--brand)}
+
+/* search results */
+.results{margin-top:8px}
+.rgroup h3{font:600 13px/1 var(--body); color:var(--muted); margin:22px 0 8px}
+.ritem{display:flex; align-items:center; gap:12px; width:100%; text-align:start; padding:12px 12px; border:0; border-radius:10px; background:transparent; cursor:pointer; text-decoration:none}
+.ritem:hover,.ritem:focus-visible{background:var(--surface)}
+.ritem .ri{display:grid; place-items:center; width:38px; height:38px; border-radius:10px; background:var(--sunken); color:var(--ink); flex:none}
+.ritem .rt{display:block; font-weight:500; color:var(--ink); line-height:1.35}
+.ritem .rs{display:block; font-size:13px; color:var(--muted); line-height:1.4; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden}
+.ritem mark{background:var(--accent-soft); color:inherit; border-radius:3px; padding:0 1px}
+.empty{padding:36px 8px; color:var(--muted); max-width:44ch}
+.empty b{display:block; color:var(--ink); font-size:18px; margin-bottom:4px}
+
+/* ---------- rules ---------- */
+.callout{display:flex; gap:14px; align-items:flex-start; padding:16px 18px; border-radius:var(--r); background:var(--accent-soft); margin-bottom:8px}
+.callout .btn.primary{background:var(--ink); border-color:var(--ink); color:var(--bg)}
+.callout i{font-size:26px; color:var(--ink); margin-top:2px}
+.callout p{margin:2px 0 12px; font-size:15px}
+.callout b{color:var(--ink)}
+.rgroup-sec{padding-top:26px}
+.rgroup-sec h2{font:700 36px/1 var(--display); margin-bottom:10px; display:flex; align-items:baseline; gap:10px}
+.rgroup-sec h2 small{font:500 13px var(--body); color:var(--muted)}
+.rules{list-style:none; margin:0; padding:0; border-top:1px solid var(--line)}
+.rules li{display:grid; grid-template-columns:24px 1fr; gap:10px; padding:12px 8px; border-bottom:1px solid var(--line)}
+.rules li span{max-width:72ch}
+.rules li i{margin-top:3px; color:var(--muted)}
+.rules li.no i{color:var(--danger)}
+.rules li.no{background:linear-gradient(to left, var(--danger-soft), transparent 70%)}
+.rules li.key i{color:var(--ink)}
+.rules li b{color:var(--ink); font-weight:700}
+.legend{display:flex; flex-wrap:wrap; gap:16px; font-size:13px; color:var(--muted); margin:6px 0 0}
+.legend span{display:inline-flex; align-items:center; gap:6px}
+.legend .n i{color:var(--danger)}
+
+/* ---------- contacts ---------- */
+.plist{list-style:none; margin:0; padding:0}
+.prov{display:grid; grid-template-columns:1fr; gap:12px; padding:18px 0; border-bottom:1px solid var(--line)}
+.prov:first-child{border-top:1px solid var(--line)}
+.prov h3{font:600 18px/1.3 var(--body); display:flex; flex-wrap:wrap; align-items:center; gap:8px}
+.prov .meta{display:grid; gap:4px; margin-top:6px; font-size:14px; color:var(--muted)}
+.prov .meta div{display:flex; gap:8px; align-items:flex-start}
+.prov .meta i{margin-top:2px}
+.prov .meta span{color:var(--text)}
+.prov .acts{display:flex; flex-wrap:wrap; gap:8px}
+@media (min-width:760px){ .prov{grid-template-columns:1fr auto; align-items:center; gap:24px} .prov .acts{justify-content:flex-end; max-width:320px} }
+.regionhead{font:700 30px/1 var(--display); color:var(--ink); margin:30px 0 10px; display:flex; align-items:baseline; gap:8px}
+.regionhead small{font:500 13px var(--body); color:var(--muted)}
+
+.stations{display:grid; grid-template-columns:1fr; gap:12px}
+@media (min-width:760px){ .stations{grid-template-columns:1fr 1fr} }
+.station{background:var(--surface); border:1px solid var(--line); border-radius:var(--r); padding:16px; display:flex; flex-direction:column; gap:10px}
+.station h3{font:700 32px/1 var(--display)}
+.station .note{display:flex; gap:8px; font-size:14px; color:var(--text); background:var(--sunken); padding:10px 12px; border-radius:10px}
+.station .note i{color:var(--muted); margin-top:2px}
+.person{display:flex; align-items:center; gap:10px; padding-top:10px; border-top:1px solid var(--line)}
+.person .pn{flex:1; min-width:0; line-height:1.3}
+.person .pn b{display:block; color:var(--ink); font-weight:600}
+.person .pn small{color:var(--muted); font-size:13px}
+.round{display:inline-grid; place-items:center; width:44px; height:44px; border-radius:var(--pill); border:1px solid var(--line); background:var(--bg); text-decoration:none; color:var(--ink)}
+.round.wa{background:var(--wa); border-color:var(--wa); color:var(--wa-ink)}
+.round:active{transform:scale(.95)}
+
+/* ---------- videos ---------- */
+.vfilter{position:relative; margin-bottom:12px}
+.vfilter i{position:absolute; inset-inline-start:14px; top:50%; transform:translateY(-50%); color:var(--muted)}
+.vfilter input{width:100%; height:46px; border-radius:var(--pill); border:1px solid var(--line); background:var(--surface); padding:0 44px 0 16px; font:500 15px var(--body); color:var(--ink)}
+.vfilter input:focus{outline:none; border-color:var(--accent)}
+.vfilter input::placeholder{color:var(--muted)}
+.vcat{padding-top:22px}
+.vcat h2{font:700 34px/1 var(--display); margin-bottom:10px; display:flex; align-items:baseline; gap:10px}
+.vcat h2 small{font:500 13px var(--body); color:var(--muted)}
+.vgrid{display:grid; grid-template-columns:1fr; border-top:1px solid var(--line)}
+@media (min-width:720px){ .vgrid{grid-template-columns:1fr 1fr; column-gap:28px} }
+.vitem{display:flex; align-items:center; gap:12px; width:100%; padding:11px 2px; border:0; border-bottom:1px solid var(--line); background:none; text-align:start; cursor:pointer; text-decoration:none; color:var(--ink); font-weight:500; line-height:1.35}
+.vitem:hover{background:var(--sunken)}
+.vitem .pi{display:grid; place-items:center; width:36px; height:36px; border-radius:var(--pill); background:var(--sunken); flex:none; color:var(--ink)}
+.vitem:hover .pi{background:var(--accent); color:var(--accent-ink)}
+.vitem .ext{margin-inline-start:auto; color:var(--muted); font-size:16px}
+.vitem .tag{margin-inline-start:auto; font-size:12px; color:var(--muted)}
+
+/* player sheet */
+/* Player: full-screen sheet on phones, centered modal from 760px. */
+dialog.sheet{border:0; padding:0; margin:0; width:100vw; max-width:100vw; height:100dvh; max-height:100dvh; background:var(--surface); color:var(--text); border-radius:0}
+dialog.sheet[open]{display:flex; flex-direction:column}
+dialog.sheet::backdrop{background:rgba(6,16,24,.6); backdrop-filter:blur(3px)}
+html:has(dialog.sheet[open]){overflow:hidden}
+@media (prefers-reduced-motion:no-preference){
+  dialog.sheet[open]{animation:sheetin .32s cubic-bezier(.2,.9,.25,1)}
+  @keyframes sheetin{from{transform:translateY(40px); opacity:0}}
+}
+.sheet-head{display:flex; align-items:center; gap:12px; padding:12px 16px; padding-top:max(12px, env(safe-area-inset-top)); flex:none}
+.sheet-head h2{font:600 17px/1.3 var(--body); flex:1; min-width:0}
+.sheet-head small{display:block; color:var(--muted); font-weight:400; font-size:13px}
+.player{background:#05121A; display:flex; align-items:center; justify-content:center; flex:1; min-height:0; overflow:hidden}
+.player iframe{width:100%; aspect-ratio:16/9; max-height:100%; border:0; display:block}
+.player.short iframe{aspect-ratio:9/16; width:auto; height:100%; max-width:100%}
+.sheet-foot{display:flex; gap:8px; padding:12px 16px 16px; padding-bottom:max(16px, env(safe-area-inset-bottom)); flex:none}
+@media (min-width:760px){
+  dialog.sheet{margin:auto; width:calc(100% - 48px); max-width:720px; height:auto; max-height:92dvh; border-radius:16px; box-shadow:0 20px 60px rgba(0,0,0,.35)}
+  .player{flex:none}
+  .player.short iframe{height:min(70dvh, 640px)}
+}
+.sheet-foot .btn{flex:1; justify-content:center}
+
+footer.sign-off{margin-top:56px; padding-top:22px; border-top:1px solid var(--line); color:var(--muted); font-size:14px}
+footer.sign-off b{color:var(--ink); font-weight:600}
+
+@media (prefers-reduced-motion:reduce){ *{animation:none!important; transition:none!important} html{scroll-behavior:auto} }
+</style>
+</head>
+<body>
+<style>
+.vbar{position:relative; z-index:30; display:flex; align-items:center; gap:6px; flex-wrap:wrap; padding:6px 12px; padding-top:max(6px, env(safe-area-inset-top)); background:#262c30; color:#e9ecea; font:500 13px/1.3 system-ui, "Arial Hebrew", sans-serif; direction:rtl}
+.vbar span{margin-inline-end:4px; opacity:.75}
+.vbar a{color:#e9ecea; text-decoration:none; padding:4px 10px; border:1px solid #4b555b; border-radius:4px; white-space:nowrap}
+.vbar a[aria-current]{background:#e9ecea; color:#1d2327; border-color:#e9ecea; font-weight:700}
+.vbar a.all{margin-inline-start:auto; border-color:transparent; text-decoration:underline; text-underline-offset:3px}
+</style>
+<nav class="vbar" aria-label="דוגמאות עיצוב"><span>דוגמה:</span><a href="../manual/" data-v="manual">א. עם תמונות</a><a href="../plain/" data-v="plain">ב. בלי תמונות</a><a href="../modern/" data-v="modern" aria-current="page">ג. מודרני</a><a class="all" href="../">הסבר</a></nav>
+<script>document.querySelectorAll('.vbar a[data-v]').forEach(a=>{a.addEventListener('click',e=>{e.preventDefault();location.href='../'+a.dataset.v+'/'+location.hash;});});</script>
+<div class="shell">
+  <aside class="side" aria-label="ניווט ראשי">
+    <a class="brand" href="#home"><span class="mark"><i class="ph-fill ph-lifebuoy"></i></span><b>מדריך שטח</b><span class="badge">הדגמה</span></a>
+    <div class="sidetools"><button class="btn sm find" data-search><i class="ph ph-magnifying-glass"></i>חיפוש<kbd>/</kbd></button><button class="iconbtn" data-theme-toggle aria-label="החלפת מצב תצוגה"><i class="ph ph-moon"></i></button></div>
+    <nav id="sidenav"></nav>
+    <div class="sidefoot">
+      <a class="btn sm" href="#maps"><i class="ph ph-map-trifold"></i>מפות עזר</a>
+      <a class="btn sm" href="https://mapot-ezer.web.app/tires" target="_blank" rel="noopener"><i class="ph ph-moon-stars"></i>פנצ'ריות לילה</a>
+      <a class="btn sm" href="#rules"><i class="ph ph-signature"></i>טופס הסרת אחריות</a>
+    </div>
+  </aside>
+
+  <div>
+    <header class="topbar">
+      <a class="brand" href="#home"><span class="mark"><i class="ph-fill ph-lifebuoy"></i></span><b>מדריך שטח</b><span class="badge">הדגמה</span></a>
+      <button class="iconbtn" data-search aria-label="חיפוש"><i class="ph ph-magnifying-glass"></i></button>
+      <button class="iconbtn" data-theme-toggle aria-label="החלפת מצב תצוגה"><i class="ph ph-moon"></i></button>
+    </header>
+
+    <main>
+      <!-- HOME -->
+      <section class="view" id="v-home" aria-labelledby="homeTitle">
+        <div class="hero">
+          <h1 class="sr" id="homeTitle">מדריך שטח</h1>
+          <blockquote><span>טוב מראה עיניים</span><span>ואין חכם כבעל ניסיון</span></blockquote>
+          <p>נהלים, אנשי קשר וסרטוני הדרכה לתקלות בשטח, במקום אחד.</p>
+        </div>
+        <div class="searchbox" id="sbox">
+          <i class="ph ph-magnifying-glass"></i>
+          <label class="sr" for="q">חיפוש</label>
+          <input id="q" type="search" autocomplete="off" enterkeyhint="search" placeholder="חפשו דגם, תקלה, עיר או נוהל">
+          <kbd>/</kbd>
+          <button class="iconbtn clear" id="qClear" aria-label="ניקוי חיפוש" style="width:38px;height:38px;border:0"><i class="ph ph-x"></i></button>
+        </div>
+        <div id="results" class="results" aria-live="polite"></div>
+
+        <div id="homeBody">
+          <div class="quick">
+            <a class="btn primary" href="https://mapot-ezer.web.app/tires" target="_blank" rel="noopener"><i class="ph-bold ph-moon-stars"></i>פנצ'ריות לילה במפה</a>
+            <a class="btn" href="#rules"><i class="ph ph-signature"></i>טופס הסרת אחריות</a>
+            <a class="btn" href="https://wa.me/972500000001" target="_blank" rel="noopener"><i class="ph ph-chalkboard-teacher"></i>המדריך הארצי</a>
+          </div>
+
+          <div class="signs" aria-label="מספרים שחשוב לזכור">
+            <a class="sign" href="#rules/1"><b>150<small>מ'</small></b><span>מרחק מינימלי שבו משולש האזהרה צריך להיראות</span><em>סיוע בכביש ראשי</em></a>
+            <a class="sign" href="#rules/1"><b>9%</b><span>מההרוגים בכבישים נפגעו בעמידה בשול</span><em>סיוע בכביש ראשי</em></a>
+            <a class="sign" href="#rules/10"><b>15<small>דק'</small></b><span>מרחק מקסימלי ליציאה לקריאת חירום</span><em>סיוע בחירום</em></a>
+            <a class="sign" href="#rules/8"><b>15<small>מ'</small></b><span>הרחקת סקרנים מזירת חילוץ</span><em>חילוץ שטח</em></a>
+          </div>
+
+          <div class="maphead" id="maps"><h2 class="h2">מפות עזר</h2><a href="https://mapot-ezer.web.app" target="_blank" rel="noopener">כל המפות<i class="ph ph-arrow-up-left"></i></a></div>
+          <div class="catlist maps" id="mapList"></div>
+
+          <h2 class="h2">ספריית סרטונים</h2>
+          <div class="catlist" id="homeCats"></div>
+
+          <h2 class="h2">אפליקציית המתנדבים</h2>
+          <div class="appstrip" id="appStrip"></div>
+
+          <div class="letter">
+            <h2>מתנדבים יקרים,</h2>
+            <div>
+              <p>באגף הדרכות ובטיחות אנו עמלים כל הזמן על-מנת לשפר, לייעל ולהפוך את הסיוע שלנו כמתנדבים למקצועית יותר, בכדי שנוכל לתת מענה רחב וטוב יותר לאזרחי ישראל.</p>
+              <p>חלק מהסרטונים צולמו ע"י מתנדבים וחלקם ע"י בעלי מקצוע. מתנדבים שרוצים להוסיף ידע ולשלוח סרטונים נוספים מוזמנים לשלוח הודעה אישית.</p>
+              <p style="margin-top:16px"><a class="btn wa sm" href="https://wa.me/972500000002" target="_blank" rel="noopener"><i class="ph ph-whatsapp-logo"></i>שליחת סרטון</a></p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- RULES -->
+      <section class="view" id="v-rules" aria-labelledby="rulesTitle">
+        <h1 class="vh" id="rulesTitle">נהלי הארגון</h1>
+        <p class="vsub">כללי הבטיחות לכל סוג סיוע. כדאי לרענן לפני יציאה לקריאה.</p>
+        <div class="callout">
+          <i class="ph ph-signature"></i>
+          <div>
+            <p><b>לפני הענקת סיוע: החתמה על טופס הסרת אחריות.</b> בסיוע כמו משיכת רכב תקוע, תיקון פנצ'ר עם תולעת או שאיבת דלק הארגון עלול להיות חשוף לתביעה. המסמך, שהופק בשיתוף היועמ"ש, מסיר אחריות לנזקי ממון כל עוד המתנדב פעל לפי כללי הבטיחות.</p>
+            <a class="btn primary sm" href="#rules">פתיחת הטופס</a>
+          </div>
+        </div>
+        <div class="sticky-tools"><div class="chips" id="ruleChips"></div></div>
+        <div class="legend"><span class="n"><i class="ph-fill ph-prohibit"></i>איסור</span><span><i class="ph ph-check"></i>הנחיה</span></div>
+        <div id="ruleGroups"></div>
+      </section>
+
+      <!-- TIRES -->
+      <section class="view" id="v-tires" aria-labelledby="tiresTitle">
+        <h1 class="vh" id="tiresTitle">פנצ'ריות ניידות</h1>
+        <p class="vsub">פנצ'ריות פרטיות שמגיעות לרכב. השעות לפי מה שמסרו לנו, כדאי לוודא בטלפון.</p>
+        <p class="maplink"><a class="btn sm" href="https://mapot-ezer.web.app/tires" target="_blank" rel="noopener"><i class="ph ph-moon-stars"></i>מפת פנצ'ריות לילה</a></p>
+        <div class="sticky-tools"><div class="chips" id="provChips" role="group" aria-label="סינון לפי אזור"></div></div>
+        <ul class="plist" id="provList"></ul>
+      </section>
+
+      <!-- STATIONS -->
+      <section class="view" id="v-stations" aria-labelledby="stTitle">
+        <h1 class="vh" id="stTitle">השאלת צמיגים</h1>
+        <p class="vsub">תחנות הארגון להשאלת צמיג. פנו לאחראי התחנה לפני שמגיעים.</p>
+        <p class="maplink"><a class="btn sm" href="https://mapot-ezer.web.app/wheels" target="_blank" rel="noopener"><i class="ph ph-map-pin-area"></i>מפת תחנות גלגלים</a></p>
+        <div class="sticky-tools"><div class="chips" id="stChips" role="group" aria-label="סינון לפי מחוז"></div></div>
+        <div id="stList"></div>
+      </section>
+
+      <!-- VIDEOS -->
+      <section class="view" id="v-videos" aria-labelledby="vidTitle">
+        <h1 class="vh" id="vidTitle">סרטוני הדרכה</h1>
+        <p class="vsub">הסבר מצולם לתקלות נפוצות לפי דגם רכב. הסרטון נפתח כאן, בלי לצאת מהדף.</p>
+        <div class="sticky-tools">
+          <div class="vfilter"><label class="sr" for="vq">סינון סרטונים</label><input id="vq" type="search" placeholder="סינון לפי דגם, למשל טויוטה" autocomplete="off"><i class="ph ph-funnel-simple"></i></div>
+          <div class="chips" id="vidChips"></div>
+        </div>
+        <div id="vidList"></div>
+        <section class="vcat" id="manuals">
+          <h2>ספרי רכב</h2>
+          <div class="vgrid" id="manList"></div>
+        </section>
+      </section>
+
+      <footer class="sign-off">
+        <p>אנו מקווים כי הסרטונים יהוו לכם לתועלת במציאת פתרונות לתקלות בשטח ולעבודה מקצועית ויעילה.</p>
+        <p><b>אגף הדרכה ובטיחות</b></p>
+        <p>גרסת הדגמה לעיצוב. שמות העסקים, אנשי הקשר ומספרי הטלפון הם לדוגמה בלבד.</p>
+      </footer>
+    </main>
+  </div>
+</div>
+
+<nav class="tabbar" id="tabbar" aria-label="ניווט ראשי"></nav>
+
+<dialog class="sheet" id="sheet" aria-labelledby="sheetTitle">
+  <div class="sheet-head">
+    <h2 id="sheetTitle"></h2>
+    <button class="iconbtn" id="sheetClose" aria-label="סגירה"><i class="ph ph-x"></i></button>
+  </div>
+  <div class="player" id="player"></div>
+  <div class="sheet-foot">
+    <a class="btn" id="sheetYT" target="_blank" rel="noopener"><i class="ph ph-youtube-logo"></i>פתיחה ביוטיוב</a>
+    <button class="btn" id="sheetShare"><i class="ph ph-share-network"></i>שיתוף</button>
+  </div>
+</dialog>
+
+<script>
+const D = {"procedures":[{"title":"כללי","rules":["בכל סוג סיוע יש להשתמש באפוד זוהר. מתנדב שטרם קיבל אפוד ישתמש באפוד הזוהר הקיים ברכבו.","בכל הגשת סיוע יש להדגיש שהארגון הינו ארגון הפועל על בסיס התנדבות ואנחנו עושים את המיטב בכדי לפתור את התקלה, אך אין כל אחריות אם חלילה נגרם נזק.","אין לבקש ו / או לקבל תמורה כספית כלשהי ממבקש הסיוע. במידה ומעוניין לתרום - יש להפנותו לתרומה באתר האינטרנט.","במידה ומבקש הסיוע מתעקש לתרום במזומן - יש להעביר את התרומה למנהל הסניף בהקדם על-מנת להפיק קבלה כחוק.","אין למכור חלפים / חלקים / ציוד כלשהו למבקש הסיוע למעט בסיוע דלק / שמן / נוזל קירור.","אין לצאת לסיוע לפני מעבר הדרכה רלוונטית מטעם אגף ההדרכה הארגוני.","בעת הסיוע מומלץ לנעול את רכבכם, למניעת עוגמת נפש."]},{"title":"סיוע בכביש ראשי","rules":["ככלל, כל עזרה המוגשת בכביש ראשי, תתבצע אך ורק בשול רחב ולאחר הגעת ניידת מתנ\"א (משטרת תנועה ארצית).","עד להגעת מתנ\"א יש לעבור את גדר הבטיחות (אם ישנה כזו) ולהמתין שם. (באין גדר בטיחות, יש להתרחק ככל האפשר מנתיב הנסיעה.)","במקרה בו קיים שול צר בצד הכביש:","אם ניתן להמשיך בנסיעה איטית וזהירה, כגון בפנצ'ר, נבקש מבעל הרכב להתקדם למקום בו השול רחב, זאת גם אם מחמת כך ייגרם נזק לצמיג או לגלגל.","במידה והתקלה אינה מאפשרת נסיעה של הרכב כלל, כגון במקרה של חוסר בשמן או בדלק, וניידת מתנ\"א טרם הגיעה, נמשיך בנסיעה עד למקום בו השול רחב, ונמתין שם עד לקבלת דיווח מהמודיע על הגעת הניידת ואישור על אבטחת הנתיב.","יש להקפיד על משולש אזהרה שייראה למרחק של 150 מטר לפחות.","יש להקפיד על לבישת אפוד זוהר בכל משך זמן הגשת הסיוע. עדיפות לאפוד ממותג של הארגון.","בכדי למנוע עוגמת נפש, הקפידו על הוצאת המפתח מרכבכם ונעילתו במהלך הסיוע או ההמתנה.","בסיום הגשת העזרה יש לוודא שהנתיב פנוי ולהתמזג בו בזהירות המירבית.","זכרו! 9% מכלל ההרוגים בכבישים נפגעו כתוצאה מעמידה בשול הדרך."]},{"title":"סיוע התנעה (כבלים / בוסטר)","rules":["יש לוודא חיבור תקין של הפלוס לפלוס (אדום) והמינוס למינוס (שחור).","במקרה של ריח חומצתי / עשן שעולה מן המצבר - אין להגיש סיוע.","ברכבים בהם אין מצבר בתא המנוע יש להתחבר לנקודת פלוס ייעודית הקיימת בתא המנוע ולתת מינוס לגוף הרכב.","יש להזהר ממגע של פלוס במינוס או בגוף הרכב.","ניתוק מצבר ייעשה אך ורק לאחר קבלת אישור מבעל מקצוע.","בכביש ראשי אין לסייע עם כבלים רגילים כלל אלא עם בוסטר בלבד או כבלים ארוכים ועל פי נוהל הבטיחות בכביש ראשי."]},{"title":"סיוע פנצ'ר","rules":["בעת הרמת הרכב יש לאבטח אותו ע\"י הנחת חפץ / גלגל רזרבי מתחת לרכב.","אין להכניס אף איבר מהגוף מתחת לרכב בכל שלבי הסיוע.","באם הרכב נמצא בשיפוע ואין אפשרות להתקדם למישור, יש להניח אבן / מעצור במיקום הרלוונטי למניעת התדרדרות הרכב ו / או נפילה מהג'ק.","לפני מתן הסיוע יש לוודא שבלם היד מופעל ושהרכב על הילוך P (ברכבים אוטומטיים) או על ראשון או רוורס עפ\"י הצורך (ברכבים ידניים).","את שחרור נעילת הברגים נבצע לפני הרמת הרכב.","חובה להדק את סגירת הברגים לאחר הורדת הרכב.","במידה והגלגל הרזרבי אינו מתיישב במקומו כראוי, נוודא שלא קיימת טבעת פלסטיק על תושבת הגלגל.","אין להרים את הרכב אם איננו בטוחים במיקום הג'ק, במידה וקיים ספק נבדוק בספר הרכב, מול המוקד או מול הפורום.","אין לקפוץ על מפתח הברגים, פעולה שכזו עלולה לעקם / לשבור את הגוז'ונים ואף לנפילה ופציעת הכונן.","כאשר הגלגל הרזרבי קטן יותר משאר הגלגלים ('בייגלה'), נעדכן את מבקש הסיוע במהירות המירבית המותרת בשימוש בגלגל זה אשר מצויינת במדבקה שעל הגלגל.","במידה ונשברים גוז'ונים (הברגים שמחזיקים את הגלגל על הרכב) - אם נשברו שני גוז'ונים צמודים, יותר משני גוז'ונים או בגלגל עם 4 גוז'ונים נשבר יותר מגוז'ון אחד, יש להפסיק את הסיוע והפנות את הפונה לגרר."]},{"title":"תיקוני חירום","rules":["תיקון חירום - כשמו כן הוא. יתבצע בחירום בלבד! במצבים בהם אין אפשרות להחליף גלגל (כאשר הגלגל הרזרבי לא קיים או לא תקין, כאשר קיימת בעיה לשחרר את הגלגל המפונצ'ר וכו').","אין לבצע תיקון חירום כאשר החור נמצא בדופן או כתף (שיפוע) הגלגל.","אין לבצע תיקון חירום כאשר קיים בצמיג תיקון נוסף במרחק של 20 ס\"מ ומטה.","אין להשתמש ביותר מתולעת / בורג אחד לתיקון התקר.","יש ליידע את בעל הרכב כי תיקון החירום עלול לגרום לפסילת הצמיג.","בצמיג מסוג Run On Flat אין להשתמש בתולעת.","בסיום הסיוע יש לעדכן את בעל הרכב כי מדובר בתיקון זמני בלבד ומחובתו להגיע לפנצ'ריה בהקדם להמשך טיפול."]},{"title":"סיוע דלק / שמן","rules":["הגשת סיוע של דלק/שמן תותנה בכך שמבקש הסיוע ישא בהוצאות.","טרם היציאה לקריאה יש לוודא מול בעל הרכב לגבי סוג הדלק/שמן הנדרש.","אין למלא שמן ברקס/הגה/גיר, היות וזו מערכת סגורה ואם קיים חוסר ישנה סיבה אחרת לכך."]},{"title":"סיוע נוזל קירור","rules":["בסיוע נוזל קירור, מכיוון שמדובר במצב חירום אשר מצריך המשך טיפול במוסך - נשתמש במים מזוקקים או במי-ברז.","אין לפתוח את מיכל המים/רדיאטור כ-15 דק' אחרי הנסיעה ברכב (ניתן לבדוק האם המיכל חם באמצעות לחיצה על צינור המים (צינור שחור עבה), במידה והצינור קשיח - אסור לפתוח).","ישנם דגמים שדורשים מילוי מים בשני מקומות, רדיאטור ומיכל עיבוי/עודפים. ברכבים אלו נמלא תחילה את המים ברדיאטור.","בסיום המילוי נמתין מספר דקות על מנת לוודא שאין נזילה."]},{"title":"סיוע שאיבת דלק","rules":["אין לשפוך את הדלק השגוי אלא במקום המיועד לכך.","אין להעביר דלק מהול מרכב אחד לרכב אחר.","בעת השאיבה אין להפעיל כל מכשיר חשמלי - לרבות מכשיר סלולרי, וכן אין לעשן בקרבת הרכב.","יש לוודא שקיים בקרבת מקום ציוד לכיבוי שריפה.","אין לשאוב בכביש ראשי ללא אבטחה של ניידת מתנ\"א."]},{"title":"סיוע חילוץ שטח","rules":["השתמשו רק ברצועות תקניות ושאקלים תקניים.","בעבודה עם כננת, חובה לפתוח מכסה מנוע.","משיכת הרכב תעשה רק מנקודות עיגון ייעודיות. במקרים חריגים שאין נקודות יש לקבל הנחיות ממפקד או סג\"מ היחידה.","במהלך הגרירה, חל איסור לכל אדם / בעל חיים לעמוד בקרבת  הרצועות  ו / או כבל הכננת.","משיכת הרכב המחולץ, תעשה כאשר הרכב מונע, במצב N, וכל החלונות שלו פתוחים בלבד.","אין למשוך רכב מוו גרירה נשלף, ללא קבלת אישור של מפקד או סג\"מ היחידה.","גרירה תתבצע באמצעות נסיעה קדימה ולא ברוורס, אלא אם יש אדם נוסף בעל ניסיון שיכוון את הנהג.","חילוץ רכב שאינו מניע, יעשה באמצעות כננת/רצועה לכדי הוצאתו מהמכשול בלבד, למרחק קצר מאוד ובכפוף לאישור מפקד סג\"מ היחידה.","גרירת רכב שאינו מניע למרחק רב, תעשה אך ורק באמצעות מוט גרירה בלבד!","אין לחלץ בשטח חקלאי ועד 100 מטר מקו הים. (אלא אם שביל רכבים בפחות מכך)","חילוץ משטח אש או שמורת טבע יעשה רק באישור מפקד או סג\"מ היחידה.","משיכה באמצעות שרשרת רכבים תעשה רק באישור מפקד או סג\"מ היחידה.","יש להרחיק סקרנים/כל אדם אחר שמשתתף בחילוץ מאזור האירוע, 15 מטרים מזירת החילוץ."]},{"title":"סיוע פתיחת רכב נעול","rules":["יש לוודא כי פרטי בעל הרכב (שם מלא ומספר ת.ז.) הרשומים ברשיון הרכב תואמים לפרטים שהתקבלו במוקד.","טרם הפתיחה יש להודיע לבעל הרכב כי אין לך או לארגון אחריות על כל נזק שייגרם בעקבות הסיוע.","אין להמליץ על שבירת חלון. בפתיחה מאתגרת או כל קושי במתן הסיוע יש לבקש עזרה ממתנדב מנוסה.","ככלל - השימוש בערכת הפתיחה מותר אך ורק בסיוע פתיחה דרך המוקד ולא בכל שימוש אחר."]},{"title":"סיוע בחירום","rules":["אין לעבור על חוקי התנועה אף לא בנסיעת חירום.","יציאה לקריאת חירום תתבצע עד למרחק של 15 דקות.","מרגע יציאת הקריאה זכרו: אין לנו דרך לדעת מה המרחק של שאר כוחות החירום שבדרך, ולא נוכל לענות על שאלות הנוגעות לכך.","במקרה בו קיים חשש כי הילד הלכוד ברכב נמצא במצוקה או בסכנת חיים, יש לשבור את חלון הדלת המרוחקת ביותר מהילד.","היציאה לחילוץ לכודים במעלית תתאפשר רק לכוננים שעברו את ההכשרה הנדרשת.","בעת הגשת סיוע חילוץ ממעלית, טרם פתיחת הדלתות חובה להוריד את מפסק החשמל.","באם המעלית תקועה בין הקומות, אין לחלץ את הלכודים בתוכה כשהיא בין הקומות.","לאחר חילוץ ממעלית יש לוודא את סגירת הדלתות ואין להחזיר את החשמל למעלית."]}],"providers":[{"region":"שירות ארצי","name":"צמיגי הדרך","area":"אשדוד עד חיפה","hours":["ימים א'-ה': 07:00-00:00","יום ו': 07:00-15:00","מוצ\"ש: החל משעה לאחר צאת השבת."],"phones":[{"tel":"0500000101","label":"050-0000101","kind":"טלפון"},{"tel":"0500000102","label":"050-0000102","kind":"נייד"}],"wa":["https://wa.me/972500000101","https://wa.me/972500000102"]},{"region":"מחוז צפון","name":"פנצ'ר בדרך","area":"צפון (מגיע גם למרכז)","hours":["24/6","יום ו': עד שעה לפני כניסת השבת.","מוצ\"ש: החל משעה לאחר צאת השבת."],"phones":[{"tel":"0500000103","label":"050-0000103","kind":"נייד"}],"wa":["https://wa.me/972500000103"]},{"region":"מחוז צפון","name":"שירותי דרך הגליל","area":"צפון","hours":["24/7"],"phones":[{"tel":"0500000104","label":"050-0000104","kind":"נייד"}],"wa":["https://wa.me/972500000104"]},{"region":"מחוז צפון","name":"צמיגי העמק","area":"צפון","hours":["24/6","יום ו': עד שעה לפני כניסת השבת.","מוצ\"ש: החל משעה לאחר צאת השבת."],"phones":[{"tel":"0500000105","label":"050-0000105","kind":"נייד"}],"wa":["https://wa.me/972500000105"]},{"region":"מחוז צפון","name":"חילוצי הכרמל","area":"צפון","hours":["24/7"],"phones":[{"tel":"0500000106","label":"050-0000106","kind":"נייד"}],"wa":["https://wa.me/972500000106"]},{"region":"מחוז מרכז","name":"צמיגי השרון","area":"מרכז","hours":["ימים א'-ה': 07:00-00:00","יום ו': 07:30-13:00","מוצ\"ש: החל משעה לאחר צאת השבת ועד חצות."],"phones":[{"tel":"0500000107","label":"050-0000107","kind":"נייד"}],"wa":["https://wa.me/972500000107"]},{"region":"מחוז מרכז","name":"פנצ'רייה ניידת מרכז","area":"בין חדרה להרצליה","hours":["24/6","יום ו': 06:45-16:00.","מוצ\"ש: החל מצאת השבת."],"phones":[{"tel":"0500000108","label":"050-0000108","kind":"נייד"}],"wa":["https://wa.me/972500000108"]},{"region":"מחוז מרכז","name":"שירותי דרך 24","area":"מרכז","hours":["24/6","יום ו': עד 12:00.","מוצ\"ש: החל השעה 20:00."],"phones":[{"tel":"0500000109","label":"050-0000109","kind":"נייד"}],"wa":["https://wa.me/972500000109"]},{"region":"מחוז מרכז","name":"צמיגי הירקון","area":"מרכז","hours":["ימים א'-ה': 07:30-16:30","יום ו': 07:30-13:00","מוצ\"ש: החל משעה לאחר צאת השבת ועד חצות."],"phones":[{"tel":"0500000110","label":"050-0000110","kind":"טלפון"},{"tel":"0500000111","label":"050-0000111","kind":"נייד"}],"wa":["https://wa.me/972500000110","https://wa.me/972500000111"]},{"region":"מחוז מרכז","name":"צמיגי יפו","area":"תל אביב","hours":["24/7"],"phones":[{"tel":"0500000112","label":"050-0000112","kind":"נייד"}],"wa":["https://wa.me/972500000112"]},{"region":"מחוז מרכז","name":"צמיגי המושבה","area":"מרכז","hours":["24/6","יום ו': עד 14:00.","מוצ\"ש: החל משעה לאחר צאת השבת."],"phones":[{"tel":"0500000113","label":"050-0000113","kind":"נייד"}],"wa":["https://wa.me/972500000113"]},{"region":"מחוז מרכז","name":"צמיגי הוואדי","area":"חריש, קציר, פרדס חנה, גבעת עדה, גבעת נילי","hours":["24/7"],"phones":[{"tel":"0500000114","label":"050-0000114","kind":"נייד"}],"wa":["https://wa.me/972500000114"]},{"region":"מחוז מרכז","name":"פנצ'ר עד הבית","area":"רמלה, לוד, צריפין, בן שמן, מודיעין, אזורי מרכז נוספים בתיאום","hours":["24/7"],"phones":[{"tel":"0500000115","label":"050-0000115","kind":"נייד"}],"wa":["https://wa.me/972500000115"]},{"region":"מחוז מרכז","name":"צמיגי השפלה","area":"מרכז","hours":["24/6","יום ו': עד 15:00.","מוצ\"ש: החל מצאת השבת."],"phones":[{"tel":"0500000116","label":"050-0000116","kind":"נייד"}],"wa":["https://wa.me/972500000116"]},{"region":"מחוז ירושלים","name":"פנצ'רייה ניידת ירושלים","area":"ירושלים","hours":["24/6","יום ו': עד חצי שעה לפני כניסת השבת.","מוצ\"ש: החל מצאת השבת."],"phones":[{"tel":"0500000117","label":"050-0000117","kind":"נייד"}],"wa":["https://wa.me/972500000117"]},{"region":"מחוז ירושלים","name":"צמיגי ההר","area":"מרכז","hours":["24/6","יום ו': סגור.","מוצ\"ש: החל משעה לאחר צאת השבת."],"phones":[{"tel":"0500000118","label":"050-0000118","kind":"נייד"}],"wa":["https://wa.me/972500000118"]},{"region":"מחוז דרום","name":"צמיגי הנגב","area":"דרום","hours":["כל יום בין השעות 07:00-19:00 (כולל סופ\"ש)."],"phones":[{"tel":"0500000119","label":"050-0000119","kind":"נייד"}],"wa":["https://wa.me/972500000119"]},{"region":"מחוז דרום","name":"צמיגי החוף","area":"אשקלון","hours":["ימים א'-ה': 07:30-22:00","יום ו': 07:30-12:00","מוצ\"ש: לא פעיל."],"phones":[{"tel":"0500000120","label":"050-0000120","kind":"נייד"}],"wa":["https://wa.me/972500000120"]},{"region":"מחוז דרום","name":"צמיגי לכיש","area":"קריית גת ודרומה","hours":["24/7"],"phones":[{"tel":"0500000121","label":"050-0000121","kind":"נייד"}],"wa":["https://wa.me/972500000121"]},{"region":"מחוז דרום","name":"צמיגי הדרום","area":"קריית גת, אשקלון, קריית מלאכי והסביבה","hours":["24/7"],"phones":[{"tel":"0500000122","label":"050-0000122","kind":"נייד"}],"wa":["https://wa.me/972500000122"]},{"region":"מחוז דרום","name":"פנצ'רייה ניידת אילת","area":"אילת","hours":["24/7"],"phones":[{"tel":"0500000123","label":"050-0000123","kind":"נייד"}],"wa":["https://wa.me/972500000123"]}],"stations":[{"region":"מחוז צפון","name":"צפת","people":[{"role":"מנהל התחנה","name":"אורי לוי","tel":"0500000124","label":"050-0000124","wa":"https://wa.me/972500000124"},{"role":"אחראי נוסף","name":"נועה כהן","tel":"0500000125","label":"050-0000125","wa":"https://wa.me/972500000125"}],"notes":[]},{"region":"מחוז מרכז","name":"חדרה","people":[{"role":"אחראית השאלות","name":"דניאל מזרחי","tel":"0500000126","label":"050-0000126","wa":"https://wa.me/972500000126"},{"role":"מנהל התחנה","name":"תמר פרץ","tel":"0500000127","label":"050-0000127","wa":"https://wa.me/972500000127"},{"role":"אחראי נוסף","name":"יואב ביטון","tel":"0500000128","label":"050-0000128","wa":"https://wa.me/972500000128"}],"notes":[]},{"region":"מחוז ירושלים","name":"בית שמש","people":[{"role":"מנהל התחנה","name":"מיכל אברהם","tel":"0500000129","label":"050-0000129","wa":"https://wa.me/972500000129"},{"role":"אחראי נוסף","name":"עומר דהן","tel":"0500000130","label":"050-0000130","wa":"https://wa.me/972500000130"}],"notes":[]},{"region":"מחוז ירושלים","name":"ירושלים","people":[{"role":"מנהל התחנה","name":"שירה פרידמן","tel":"0500000131","label":"050-0000131","wa":"https://wa.me/972500000131"},{"role":"אחראי נוסף","name":"איתי אזולאי","tel":"0500000132","label":"050-0000132","wa":"https://wa.me/972500000132"},{"role":"אחראי נוסף","name":"רוני שפירא","tel":"0500000133","label":"050-0000133","wa":"https://wa.me/972500000133"}],"notes":["המיקום המדויק נמסר בטלפון אצל מנהל התחנה."]},{"region":"מחוז ירושלים","name":"גוש עציון","people":[{"role":"מנהל התחנה","name":"אלון גבאי","tel":"0500000134","label":"050-0000134","wa":"https://wa.me/972500000134"}],"notes":["המיקום המדויק נמסר בטלפון אצל מנהל התחנה."]},{"region":"מחוז ירושלים","name":"הר חברון","people":[{"role":"מנהל התחנה","name":"הדס רוזן","tel":"0500000135","label":"050-0000135","wa":"https://wa.me/972500000135"},{"role":"אחראי נוסף","name":"עידו מלכה","tel":"0500000136","label":"050-0000136","wa":"https://wa.me/972500000136"}],"notes":["המיקום המדויק נמסר בטלפון אצל מנהל התחנה."]},{"region":"מחוז דרום","name":"ניר גלים","people":[{"role":"מנהל התחנה","name":"יעל אדלר","tel":"0500000137","label":"050-0000137","wa":"https://wa.me/972500000137"}],"notes":["המיקום המדויק נמסר בטלפון אצל מנהל התחנה."]},{"region":"מחוז דרום","name":"זרחיה","people":[{"role":"מנהל התחנה","name":"נדב חדד","tel":"0500000138","label":"050-0000138","wa":"https://wa.me/972500000138"}],"notes":[]},{"region":"מחוז דרום","name":"אופקים","people":[{"role":"מנהל התחנה","name":"ליאור סויסה","tel":"0500000139","label":"050-0000139","wa":"https://wa.me/972500000139"}],"notes":[]},{"region":"מחוז דרום","name":"מצפה רמון","people":[{"role":"מנהלי התחנה","name":"גיל ברק","tel":"0500000140","label":"050-0000140","wa":"https://wa.me/972500000140"},{"role":"טלפון נוסף","name":"מאיה קרמר","tel":"0500000141","label":"050-0000141","wa":"https://wa.me/972500000141"}],"notes":[]},{"region":"מחוז דרום","name":"אילת","people":[{"role":"מנהל התחנה","name":"אסף טל","tel":"0500000142","label":"050-0000142","wa":"https://wa.me/972500000142"},{"role":"אחראי נוסף","name":"ענבל שגיא","tel":"0500000143","label":"050-0000143","wa":"https://wa.me/972500000143"}],"notes":[]}],"videos":[{"title":"חיבור כבל גיר","items":[{"url":"https://youtu.be/fx4AvXaIixQ","title":"אופל אסטרה"},{"url":"https://youtu.be/IaAGG7ocmvo","title":"איסוזו דימקס"},{"url":"https://youtu.be/f3eKGheMeEE","title":"ביואיק לקרוס"},{"url":"https://youtu.be/XoM3sRoop7g","title":"ג'יפ רנגלר"},{"url":"https://youtu.be/lAhps9-H0fY","title":"דודג' אוונג'ר"},{"url":"https://youtu.be/z8HkToF8gWQ","title":"טויוטה סיינה"},{"url":"https://youtu.be/sPkrt01T9DY","title":"יונדאי H1"},{"url":"https://youtu.be/35C9CO545SM","title":"יונדאי / קיה"},{"url":"https://youtu.be/-_1Z9C2nwdQ","title":"יונדאי ולוסטר"},{"url":"https://youtu.be/nWuWhUHmZfs","title":"מיצובישי אטראז' / ספייס סטאר"},{"url":"https://youtu.be/szeF3VB7s-g","title":"פורד פוקוס"},{"url":"https://youtu.be/HRcKtvUPJx8","title":"פורד קוגה"},{"url":"https://youtu.be/Z6JrzAAOREQ","title":"שברולט אורלנדו"},{"url":"https://youtu.be/5HCnr_VsYQA","title":"שברולט אפלנדר"},{"url":"https://youtu.be/vqnJhn5MlSs","title":"שברולט קרוז / אופל אסטרה"},{"url":"https://youtu.be/bSn_D20XmIE","title":"ניסאן מיקרה"},{"url":"https://youtu.be/d9cSZuYr5wk","title":"MG 350"},{"url":"https://youtube.com/shorts/nAOJBCvd8kc?feature=share","title":"מאזדה BT-50"}]},{"title":"קודנית","items":[{"url":"https://youtu.be/3q2tya4rGsA","title":"ניקוי מקשי קודן"},{"url":"https://youtu.be/lNSZi-E98BQ","title":"נטרול קוד עם סוויץ'"},{"url":"https://youtu.be/jIIjG03U9As","title":"נטרול אזעקת קוברה באמצעות כפתור חירום"}]},{"title":"פנצ'ר - מיקום גלגל חלופי","items":[{"url":"https://youtu.be/Ts4EcwbyxC8","title":"איסוזו דימקס"},{"url":"https://youtu.be/ekowqMk65UE","title":"ג'ילי ג'אומטרי"},{"url":"https://youtu.be/2XML3XC7kHA","title":"טויוטה היילקס"},{"url":"https://youtu.be/EzF51sbgIAs","title":"טויוטה סיינה"},{"url":"https://youtu.be/zkjTyD3gDRk?si=25tkYwqdGHrtuiwL","title":"יונדאי סטאריה"},{"url":"https://youtu.be/xccDD7KYfhE","title":"יונדאי סנטה-פה 2012-2018"},{"url":"https://youtu.be/KBO1V1q-ISs","title":"יונדאי סנטה-פה 2019 ומעלה"},{"url":"https://youtu.be/T7_9Lx5OSQA","title":"מאזדה MPV"},{"url":"https://youtu.be/SDqRg4NtJSg","title":"מיצובישי אאוטלנדר"},{"url":"https://youtu.be/2VsuZ-D-sXU","title":"מיצובישי טרייטון"},{"url":"https://youtu.be/JjryOqDaZe4","title":"מרצדס ויטו"},{"url":"https://youtu.be/Ji-N95eHTeM","title":"מרצדס ספרינטר"},{"url":"https://youtu.be/nLlJk7xwefI","title":"סיטרואן C4"},{"url":"https://youtu.be/RV732KLGFH8","title":"סיטרואן ברלינגו"},{"url":"https://youtu.be/Ywj5W_YhHUk","title":"פורד אקונוליין"},{"url":"https://youtu.be/RoM4DgKWEwg","title":"פורד טרנזיט"},{"url":"https://youtu.be/uaIpbp_Y5ns","title":"פיאט דובלו"},{"url":"https://youtu.be/nJVuOHdTkvI","title":"פיאט דוקאטו"},{"url":"https://youtu.be/uJZdOLL6ZPo","title":"פיג'ו 5008"},{"url":"https://youtu.be/n9IBuWV0pHI","title":"פיג'ו בוקסר"},{"url":"https://youtu.be/LGjdWlRsEwE","title":"צ'רי טיגו 8"},{"url":"https://youtu.be/D-ZUAHnFsDg","title":"קיה קארנס"},{"url":"https://youtu.be/HfOoZ-0afVY","title":"קיה קרניבל"},{"url":"https://youtu.be/UpX7f5raWng","title":"קרייזלר גראנד קראוון (ורכבי קרייזלר נוספים)"},{"url":"https://youtu.be/yIit5Kna2pM","title":"רנו מאסטר"},{"url":"https://youtu.be/ZVDvjRSVvyw","title":"רנו גראנד סניק"},{"url":"https://youtu.be/LHfqOZOxsG0","title":"רנו קליאו"},{"url":"https://youtu.be/UGfV0YyAbCE","title":"רנו מגאן"},{"url":"https://www.carcarekiosk.com/video/2008_Chevrolet_Uplander_LS_3.9L_V6/tires_and_wheels/change_a_flat_tire","title":"שברולט אפלנדר"},{"url":"https://youtu.be/DOBTaoSBDWE","title":"שברולט טראוורס"}]},{"title":"פנצ'ר - שונות","items":[{"url":"https://youtu.be/WSffS7NQc4U","title":"הוצאת מתאם בגלגל מגנזיום"},{"url":"https://youtu.be/23L3q7shiSU","title":"מיקום ג'ק ומפתח ברגים מיצובישי גרנדיס"},{"url":"https://youtu.be/e61prza6Nro","title":"שימוש בברגי סיליקון"},{"url":"https://shimushon.yedidim1230.com/images/flat-repairable-area.jpeg","title":"איזור מותר לתיקון תקר"}]},{"title":"אופנועים","items":[{"url":"https://youtu.be/a9SkdnsxBIQ","title":"פתיחת מושב סאניאנג ג'וירייד"},{"url":"https://youtu.be/CAZOnVK3Lx8","title":"פתיחת מושב סאניאנג TL500"},{"url":"https://youtu.be/aRY5HpoODz8","title":"חשיפת מצבר - קימקו AK550"},{"url":"https://youtu.be/l4PEpCFXHKY","title":"חשיפת מצבר - הונדה X-ADV"},{"url":"https://youtu.be/-icGc04ZsQc","title":"חשיפת מצבר - הונדה פורזה"},{"url":"https://www.youtube.com/watch?v=5ec23igEXbA","title":"חשיפת מצבר - ימאהה X-Max"},{"url":"https://youtu.be/AJ_kRbt1RUI","title":"חשיפת מצבר - ימאהה Tricity 125"},{"url":"https://youtu.be/TgBFoLKO1Yg","title":"חשיפת מצבר - ימאהה Tricity 300"},{"url":"https://youtu.be/Rw23D6YRZnk","title":"חשיפת מצבר - ב.מ.וו GS650"},{"url":"https://www.youtube.com/watch?v=hxh4WZl1GF0","title":"חשיפת מצבר - ב.מ.וו GS1200"}]},{"title":"קיפול מושבי רכב","items":[{"url":"https://youtu.be/IV_VUqF9fbU","title":"הונדה סיוויק"},{"url":"https://youtu.be/zpgLvJ8Pagc","title":"מאזדה 3 שנתונים 2013-2020"},{"url":"https://youtu.be/nPeZM9xhP0Q","title":"מאזדה 3 שנתונים 2020-2023"},{"url":"https://youtu.be/mQOqZMM6YAc","title":"מאזדה לאנטיס"},{"url":"https://youtu.be/r53AxCo-Jew","title":"פולקסוואגן ג'טה"}]},{"title":"פתיחת תא מטען","items":[{"url":"https://youtu.be/SSGOWGknk2o","title":"יונדאי סונטה 2014-2017"},{"url":"https://youtu.be/Z5GK-WIkWHk","title":"יונדאי סונטה 2018-2020"},{"url":"https://youtube.com/shorts/JKGvgwFDIaQ","title":"JAECOO 5"},{"url":"https://youtube.com/shorts/gVnaEEqSpaM","title":"JAECOO 8"}]},{"title":"פתיחת רכבים ובתים","items":[{"url":"https://youtu.be/rRIEoDWTXMo","title":"טסלה מודל 3"},{"url":"https://youtu.be/lgG4kYAc0gg","title":"לשונית תקולה בדלת הרכב"},{"url":"https://youtu.be/_iSWaQGu9PA","title":"פולקסוואגן קאדי"},{"url":"https://youtu.be/_tq3FL5kdKE","title":"פתיחת מכסה מנוע תקול בפורד פוקוס"},{"url":"https://youtu.be/jyb8-PYVyJY","title":"פתיחת רכבי VAG עם מצבר פרוק באמצעות השלט"},{"url":"https://youtu.be/H2gl47CVeTU","title":"פתיחת רכב עם מפתח מכני כשאין חשמל ברכב"},{"url":"https://youtu.be/Tk3ijQ0WoQs","title":"פתיחת רכב יונדאי איוניק כשהמצבר ריק"},{"url":"https://youtu.be/eh_FG1O3Co0","title":"פתיחה והתנעת מאזדה 3/6/CX-5 כשהסוללה בשלט התרוקנה"},{"url":"https://youtu.be/8zVf2ewMQts","title":"פתיחת וו עליון בדלת רב בריח"},{"url":"https://youtu.be/JwyTJWfLrxc","title":"פתיחת שרשרת עליונה בדלת רב בריח"},{"url":"https://youtu.be/wQHw0wuGjFo","title":"פתיחת דלת מגנט ביתית"},{"url":"https://youtu.be/n2odtTqHNvw","title":"פתיחת דלת טרוקה עם בקבוק"},{"url":"https://youtube.com/shorts/s9ocOHYyso8","title":"פתיחת דלת טרוקה"},{"url":"https://youtu.be/HB20xCwhyWM","title":"פתיחת תא המטען בהונדה פורזה באמצעות מפתח החירום"},{"url":"https://youtu.be/3OPH-6Z_GvE","title":"פתיחת תא המטען בהונדה פורזה ללא מפתח החירום"},{"url":"https://youtube.com/shorts/5QWr0wgQF10","title":"פתיחת תא המטען ימאהה X-Max 300 ללא המפתח"}]},{"title":"שחרור ידיות הילוכים","items":[{"url":"https://youtu.be/L6qIx2bwCH4","title":"שחרור ידית הילוכים תקועה"},{"url":"https://youtu.be/B3MO_x2fUVw","title":"שחרור ידית הילוכים פולקסוואגן, אאודי, סיאט וסקודה"},{"url":"https://youtu.be/bNAC9ftBAE0","title":"שחרור ידית הילוכים במיצובישי לנסר"},{"url":"https://youtube.com/shorts/ImFCWy46RqQ?feature=share","title":"שחרור ידית הילוכים בסיטרואן C3 AirCross"},{"url":"https://youtu.be/RzDKnjrlYss","title":"שחרור ידית הילוכים בפורד אדג'"},{"url":"https://youtube.com/shorts/qI0c83AVD7w?feature=share","title":"שחרור ידית הילוכים ברנו קליאו"},{"url":"https://youtu.be/kUew8W9xZcA","title":"שחרור ידית הילוכים טויוטה פרואייס מקס, פיאט דוקאטו ופיג'ו בוקסר"}]},{"title":"אירועי מצב מלחמה","items":[{"url":"https://youtu.be/pUsWGSXj2NY","title":"שחרור חלון ממ\"ד באמצעות מגבה (ג'ק) - 1"},{"url":"https://youtube.com/shorts/4j0tKtR_STI?feature=share","title":"שחרור חלון ממ\"ד באמצעות מגבה (ג'ק) - 2"},{"url":"https://youtu.be/2n3jo9dPbO0","title":"שחרור תריס ממ\"ד"},{"url":"https://youtu.be/v8G3Pznv2cg","title":"שחרור תריס ממ\"ד באמצעות לום"},{"url":"https://youtube.com/shorts/Nkui0rUVBhU","title":"סגירת דלת ממ\"ד"},{"url":"https://youtube.com/shorts/3O1TwCa-Vd4","title":"שחרור ידית חלון ממ\"ד"},{"url":"https://youtube.com/shorts/LeHovYAc76Y","title":"פריצת דלת ממ\"ד תקולה"},{"url":"https://youtu.be/UeMMlwOwTws","title":"חיזוק ידית דלת ממ\"ד"},{"url":"https://www.youtube.com/shorts/R-T3cD61m5I","title":"נעילת דלת ממ\"ד"}]},{"title":"שחרור כבל טעינה","items":[{"url":"https://youtube.com/shorts/-z8NtoZUKMU?feature=share","title":"שחרור כבל טעינה - BYD ATTO3"},{"url":"https://youtube.com/shorts/jrTmuVLG_-Y","title":"שחרור כבל טעינה - CHERY TIGGO 9"},{"url":"https://youtube.com/shorts/032yvfWlTrU","title":"שחרור כבל טעינה - JAC 40"},{"url":"https://www.youtube.com/shorts/2yaalfLLuVY","title":"שחרור כבל טעינה - MG S9"},{"url":"https://www.youtube.com/shorts/NyZ6tk1qvco","title":"שחרור כבל טעינה - OMODA 7"},{"url":"https://youtube.com/shorts/HRj9P0G9Ouo","title":"שחרור כבל טעינה - קיה נירו פלוס EV"},{"url":"https://www.youtube.com/shorts/s1gl5sca-_c","title":"שחרור כבל טעינה - יונדאי איוניק 5"},{"url":"https://youtu.be/lJEbkCetjm0","title":"שחרור כבל טעינה - טסלה מודל Y"}]},{"title":"שונות","items":[{"url":"https://youtu.be/OyL1JQ7LPg4","title":"שימוש בחולץ מפתחות"},{"url":"https://youtu.be/uBxeGve15PY","title":"יוניט ברקס (אור ברקס לא נכבה)"},{"url":"https://youtu.be/iNYBagBkVL8","title":"חיבור מינוס במיצובישי אאוטלנדר"},{"url":"https://youtu.be/_SzMpedLsIE","title":"מילוי שמן בג'ק הידראולי"},{"url":"https://youtu.be/g9411_Degd8","title":"שחרור הגה נעול"},{"url":"https://shimushon.yedidim1230.com/images/ford-fuel-filler.jpeg","title":"פתיחת שסתום דלק פורד"},{"url":"https://shimushon.yedidim1230.com/images/car-warning-lights.jpeg","title":"מפרט נורות אזהרה ברכב"},{"url":"https://shimushon.yedidim1230.com/docs/dash-lights.pdf","title":"נורות אזהרה ברכב"},{"url":"https://youtu.be/IquqWWIyQ6o","title":"שחרור רגל מפדאל אופניים"},{"url":"https://youtu.be/_xPeapMEWZ8","title":"כיול דוושה - יונדאי וקיה"},{"url":"https://youtu.be/Gn4UCt83PpQ","title":"פירוק סוויץ' - יונדאי וקיה"},{"url":"https://youtu.be/V4MsY8yyZ-w","title":"שחרור בלם יד - פורד S-Max וגלקסי"},{"url":"https://youtube.com/shorts/wT5GKC-SLyU?feature=share3","title":"התנעת טסלה מודל 3"},{"url":"https://youtu.be/1bqGA4x843o","title":"התנעת יונדאי איוניק 5"},{"url":"https://youtube.com/shorts/QtiudZd_ajI?feature=share","title":"פתיחת מעלית באמצעות בוקסה 6 / 7"},{"url":"https://youtube.com/shorts/zJCUsZcvCHY","title":"מצב הפעלה חסכונית מאולץ ברכבי JAECOO ו- OMODA"},{"url":"https://youtu.be/nEzlReDmCjc","title":"מצב הפעלה חסכונית מאולץ ברכבי CHERY"},{"url":"https://www.youtube.com/watch?v=eTjmIRkHHTo","title":"הפעלת מצב גרירה ברכבי טסלה"}]}],"manuals":[{"url":"https://www.toyota.co.il/service-and-accessories/owners-manuals","title":"טויוטה"},{"url":"https://www.hyundaimotors.co.il/maintenance/","title":"יונדאי"},{"url":"https://www.ael-service.co.il/category/manual_user","title":"סוזוקי"},{"url":"https://books.championmotors.co.il/","title":"פולקסוואגן, אאודי, סיאט, סקודה וקופרה"}],"app":[{"url":"https://youtube.com/shorts/CVtRnIuos5I","title":"התקנת והורדת יישומון - פלטפורמה למתנדבים"},{"url":"https://youtube.com/shorts/6_yDulbQEsU","title":"כיצד לוקחים אירועים ביישומון - פלטפורמה"},{"url":"https://youtube.com/shorts/bwfvBiSIQig","title":"כיצד משתמשים בישומון הארגון - פלטפורמה"}]};
+
+const VIEWS = [
+  {id:'home', label:'בית', short:'בית', icon:'house'},
+  {id:'rules', label:'נהלי הארגון', short:'נהלים', icon:'shield-check'},
+  {id:'tires', label:"פנצ'ריות ניידות", short:"פנצ'ריות", icon:'tire', count:D.providers.length},
+  {id:'stations', label:'השאלת צמיגים', short:'צמיגים', icon:'warehouse', count:D.stations.length},
+  {id:'videos', label:'סרטוני הדרכה', short:'סרטונים', icon:'play-circle', count:D.videos.reduce((a,c)=>a+c.items.length,0)},
+];
+const CAT_ICON = {"חיבור כבל גיר":"link-simple","קודנית":"key","פנצ'ר - מיקום גלגל חלופי":"tire","פנצ'ר - שונות":"wrench","אופנועים":"motorcycle","קיפול מושבי רכב":"armchair","פתיחת תא מטען":"car-profile","פתיחת רכבים ובתים":"lock-key-open","שחרור ידיות הילוכים":"joystick","אירועי מצב מלחמה":"shield-warning","שחרור כבל טעינה":"charging-station","שונות":"toolbox"};
+const MAPS = [
+  {p:'tires', t:"פנצ'ריות לילה", i:'moon-stars'},
+  {p:'wheels', t:'תחנות גלגלים', i:'tire'},
+  {p:'fuel', t:'תחנות דלק', i:'gas-pump'},
+  {p:'charging', t:'עמדות טעינה', i:'charging-station'},
+  {p:'car', t:'חיפוש רכב', i:'car-profile'},
+  {p:'jeeps', t:"ג'יפים", i:'jeep'},
+  {p:'regions', t:'מרחבים וסניפים', i:'map-trifold'},
+  {p:'security', t:'מוקדים ביטחוניים', i:'siren'},
+  {p:'dispatch', t:'זירוז בכל הארץ', i:'lightning'},
+  {p:'hoods', t:'שכונות', i:'buildings'},
+].map(m => ({...m, url:'https://mapot-ezer.web.app/' + m.p}));
+const REGION_SHORT = r => r.replace('מחוז ','');
+
+const $ = s => document.querySelector(s);
+const esc = s => String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const slug = (i) => 'g' + i;
+const ytInfo = url => {
+  const m = url.match(/(?:youtu\.be\/|shorts\/|[?&]v=)([\w-]{11})/);
+  return m ? {id:m[1], short:/shorts\//.test(url)} : null;
+};
+
+/* ---------- theme ---------- */
+const root = document.documentElement;
+function getStored(){ try{ return localStorage.getItem('theme') }catch(e){ return null } }
+function setTheme(t){ root.dataset.theme = t; try{ localStorage.setItem('theme', t) }catch(e){} syncThemeIcon(); }
+function isDark(){ return root.dataset.theme ? root.dataset.theme === 'dark' : matchMedia('(prefers-color-scheme: dark)').matches }
+function syncThemeIcon(){ document.querySelectorAll('[data-theme-toggle]').forEach(b => b.innerHTML = `<i class="ph ${isDark()?'ph-sun':'ph-moon'}"></i>`); }
+if (getStored()) root.dataset.theme = getStored();
+syncThemeIcon();
+document.querySelectorAll('[data-theme-toggle]').forEach(b => b.onclick = () => setTheme(isDark() ? 'light' : 'dark'));
+matchMedia('(prefers-color-scheme: dark)').addEventListener('change', syncThemeIcon);
+
+/* ---------- nav ---------- */
+$('#sidenav').innerHTML = VIEWS.map(v => `<a href="#${v.id}" data-v="${v.id}"><i class="ph ph-${v.icon}"></i>${v.label}${v.count?`<small>${v.count}</small>`:''}</a>`).join('');
+$('#tabbar').innerHTML = VIEWS.map(v => `<a href="#${v.id}" data-v="${v.id}"><i class="ph ph-${v.icon}"></i><span>${v.short}</span></a>`).join('');
+
+/* ---------- home ---------- */
+$('#homeCats').innerHTML = D.videos.map((c,i) => `<a href="#videos/${i}"><i class="ph ph-${CAT_ICON[c.title]||'play-circle'}"></i>${esc(c.title)}<small>${c.items.length}</small><i class="ph ph-caret-left"></i></a>`).join('')
+  + `<a href="#videos/manuals"><i class="ph ph-book-open-text"></i>ספרי רכב<small>${D.manuals.length}</small><i class="ph ph-caret-left"></i></a>`;
+$('#mapList').innerHTML = MAPS.map(m => `<a href="${m.url}" target="_blank" rel="noopener"><i class="ph ph-${m.i}"></i>${m.t}<i class="ph ph-arrow-up-left" style="margin-inline-start:auto;color:var(--muted)"></i></a>`).join('');
+$('#appStrip').innerHTML = D.app.map(a => `<button data-play="${esc(a.url)}" data-title="${esc(a.title.replace(' - פלטפורמה',''))}" data-cat="אפליקציית המתנדבים"><i class="ph ph-device-mobile"></i>${esc(a.title.replace(' - פלטפורמה למתנדבים','').replace(' - פלטפורמה',''))}</button>`).join('');
+
+/* ---------- rules ---------- */
+const NO_RE = /^(אין |אין ל|אסור|חל איסור)/;
+const emph = s => esc(s).replace(/(\d+%?)\s?(מטר(ים)?|מ'|דק'|דקות|ס"מ)?/g, (m) => `<b>${m}</b>`);
+$('#ruleChips').innerHTML = D.procedures.map((g,i) => `<a class="chip" href="#rules/${i}" data-rc="${i}">${esc(g.title.replace(/^סיוע /,''))}</a>`).join('');
+$('#ruleGroups').innerHTML = D.procedures.map((g,i) => `
+  <section class="rgroup-sec" id="${slug(i)}">
+    <h2>${esc(g.title)}<small>${g.rules.length} כללים</small></h2>
+    <ul class="rules">${g.rules.map((r,j) => {
+      const no = NO_RE.test(r);
+      return `<li id="${slug(i)}-${j}" class="${no?'no':''}"><i class="${no?'ph-fill ph-prohibit':'ph ph-check'}"></i><span>${emph(r)}</span></li>`;
+    }).join('')}</ul>
+  </section>`).join('');
+
+/* ---------- providers ---------- */
+const REGIONS = ['הכל', ...new Set(D.providers.map(p=>p.region))];
+let provRegion = 'הכל';
+const hoursBadge = h => { const s=(h||[]).join(' '); return /24\/7/.test(s)?'<span class="badge full">24/7</span>':/24\/6/.test(s)?'<span class="badge">24/6</span>':''; };
+const waFor = (p, tel) => p.wa.find(w => w.endsWith(tel.slice(1))) ;
+function renderProviders(){
+  $('#provChips').innerHTML = REGIONS.map(r => {
+    const n = r==='הכל'?D.providers.length:D.providers.filter(p=>p.region===r).length;
+    return `<button class="chip" aria-pressed="${r===provRegion}" data-r="${esc(r)}">${esc(REGION_SHORT(r))} <small>${n}</small></button>`;
+  }).join('');
+  const list = D.providers.map((p,i)=>({...p,i})).filter(p => provRegion==='הכל' || p.region===provRegion);
+  $('#provList').innerHTML = list.map(p => {
+    const hours = p.hours.filter(h => !/^24\/[67]$/.test(h));
+    const btns = p.phones.map(ph => {
+      const w = waFor(p, ph.tel);
+      return `<a class="btn sm" href="tel:${ph.tel}"><i class="ph ph-phone"></i>${ph.label}</a>${w?`<a class="btn wa sm" href="${w}" target="_blank" rel="noopener" aria-label="WhatsApp ${esc(p.name)}"><i class="ph ph-whatsapp-logo"></i>WhatsApp</a>`:''}`;
+    }).join('');
+    return `<li class="prov" id="p${p.i}">
+      <div>
+        <h3>${esc(p.name)} ${hoursBadge(p.hours)}</h3>
+        <div class="meta">
+          <div><i class="ph ph-map-pin"></i><span>${esc(p.area)}</span></div>
+          ${hours.length?`<div><i class="ph ph-clock"></i><span>${hours.map(esc).join('<br>')}</span></div>`:''}
+        </div>
+      </div>
+      <div class="acts">${btns}</div>
+    </li>`;
+  }).join('');
+}
+$('#provChips').addEventListener('click', e => { const b=e.target.closest('[data-r]'); if(!b) return; provRegion=b.dataset.r; renderProviders(); });
+renderProviders();
+
+/* ---------- stations ---------- */
+const STR = ['הכל', ...new Set(D.stations.map(s=>s.region))];
+let stRegion='הכל';
+function renderStations(){
+  $('#stChips').innerHTML = STR.map(r => `<button class="chip" aria-pressed="${r===stRegion}" data-r="${esc(r)}">${esc(REGION_SHORT(r))} <small>${r==='הכל'?D.stations.length:D.stations.filter(s=>s.region===r).length}</small></button>`).join('');
+  const regs = stRegion==='הכל' ? STR.slice(1) : [stRegion];
+  $('#stList').innerHTML = regs.map(r => {
+    const ss = D.stations.map((s,i)=>({...s,i})).filter(s=>s.region===r);
+    return `<h2 class="regionhead">${esc(r)}<small>${ss.length} תחנות</small></h2><div class="stations">${ss.map(s => `
+      <article class="station" id="s${s.i}">
+        <h3>${esc(s.name)}</h3>
+        ${s.notes.map(n=>`<div class="note"><i class="ph ph-info"></i><span>${esc(n)}</span></div>`).join('')}
+        ${s.people.map(p => `<div class="person">
+          <div class="pn"><b>${esc(p.name||p.role)}</b><small>${esc(p.name?p.role:'')} ${p.label?`<span dir="ltr">${p.label}</span>`:''}</small></div>
+          ${p.tel?`<a class="round" href="tel:${p.tel}" aria-label="חיוג ל${esc(p.name||p.role)}"><i class="ph ph-phone"></i></a>`:''}
+          ${p.wa?`<a class="round wa" href="${p.wa}" target="_blank" rel="noopener" aria-label="WhatsApp ל${esc(p.name||p.role)}"><i class="ph ph-whatsapp-logo"></i></a>`:''}
+        </div>`).join('')}
+      </article>`).join('')}</div>`;
+  }).join('');
+}
+$('#stChips').addEventListener('click', e => { const b=e.target.closest('[data-r]'); if(!b) return; stRegion=b.dataset.r; renderStations(); });
+renderStations();
+
+/* ---------- videos ---------- */
+let vq = '';
+const norm = s => String(s).toLowerCase().replace(/[״׳"'`.,()\/\-–]/g,' ').replace(/\s+/g,' ').trim();
+function vItem(it, cat){
+  const yt = ytInfo(it.url);
+  if (yt) return `<button class="vitem" data-play="${esc(it.url)}" data-title="${esc(it.title)}" data-cat="${esc(cat)}"><span class="pi"><i class="ph-fill ph-play"></i></span>${esc(it.title)}${yt.short?'<span class="tag">קצר</span>':''}</button>`;
+  const kind = /\.pdf$/.test(it.url)?'file-pdf':/\.(jpe?g|png)$/.test(it.url)?'image':'arrow-square-out';
+  return `<a class="vitem" href="${esc(it.url)}" target="_blank" rel="noopener"><span class="pi"><i class="ph ph-${kind}"></i></span>${esc(it.title)}<i class="ph ph-arrow-up-left ext"></i></a>`;
+}
+$('#vidChips').innerHTML = D.videos.map((c,i)=>`<a class="chip" href="#videos/${i}" data-vc="${i}">${esc(c.title)} <small>${c.items.length}</small></a>`).join('') + `<a class="chip" href="#videos/manuals" data-vc="manuals">ספרי רכב</a>`;
+function renderVideos(){
+  const toks = norm(vq).split(' ').filter(Boolean);
+  let total = 0;
+  const html = D.videos.map((c,i) => {
+    const items = c.items.filter(it => toks.every(t => norm(it.title+' '+c.title).includes(t)));
+    total += items.length;
+    if (!items.length) return '';
+    return `<section class="vcat" id="vc${i}"><h2>${esc(c.title)}<small>${items.length}</small></h2><div class="vgrid">${items.map(it=>vItem(it,c.title)).join('')}</div></section>`;
+  }).join('');
+  $('#vidList').innerHTML = total ? html : `<div class="empty"><b>אין סרטון שמתאים ל"${esc(vq)}"</b>נסו שם יצרן בלבד, או חפשו בחיפוש הכללי בעמוד הבית. יש לכם סרטון לתקלה הזו? <a href="https://wa.me/972500000002" target="_blank" rel="noopener">שלחו לנו</a>.</div>`;
+  $('#manuals').style.display = toks.length ? 'none' : '';
+}
+$('#vq').addEventListener('input', e => { vq = e.target.value; renderVideos(); });
+$('#manList').innerHTML = D.manuals.map(m => `<a class="vitem" href="${esc(m.url)}" target="_blank" rel="noopener"><span class="pi"><i class="ph ph-book-open-text"></i></span>${esc(m.title)}<i class="ph ph-arrow-up-left ext"></i></a>`).join('');
+renderVideos();
+
+/* ---------- player ---------- */
+const sheet = $('#sheet');
+let current = null;
+function openPlayer(url, title, cat){
+  const yt = ytInfo(url);
+  // YouTube embeds need a Referer (error 153 on file://), so link out there.
+  if (!yt || location.protocol === 'file:') { window.open(url,'_blank','noopener'); return; }
+  current = {url, title};
+  $('#sheetTitle').innerHTML = `${esc(title)}<small>${esc(cat||'')}</small>`;
+  const p = $('#player'); p.className = 'player' + (yt.short?' short':'');
+  p.innerHTML = `<iframe src="https://www.youtube-nocookie.com/embed/${yt.id}?autoplay=1&rel=0&playsinline=1" title="${esc(title)}" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>`;
+  $('#sheetYT').href = url;
+  $('#sheetShare').style.display = navigator.share ? '' : 'none';
+  sheet.showModal();
+}
+function closePlayer(){ sheet.close(); }
+sheet.addEventListener('close', () => { $('#player').innerHTML=''; });
+sheet.addEventListener('click', e => { if (e.target === sheet) closePlayer(); });
+$('#sheetClose').onclick = closePlayer;
+$('#sheetShare').onclick = () => { if(current && navigator.share) navigator.share({title:current.title, url:current.url}).catch(()=>{}); };
+document.addEventListener('click', e => { const b = e.target.closest('[data-play]'); if (b) openPlayer(b.dataset.play, b.dataset.title, b.dataset.cat); });
+
+/* ---------- global search ---------- */
+const IDX = [];
+D.procedures.forEach((g,i) => g.rules.forEach((r,j) => IDX.push({type:'rule', t:r, s:g.title, go:`#rules/${i}/${j}`, icon: NO_RE.test(r)?'prohibit':'shield-check'})));
+D.providers.forEach((p,i) => IDX.push({type:'prov', t:p.name, s:`${p.area} · ${REGION_SHORT(p.region)}`, extra:p.region, go:`#tires/${i}`, icon:'tire'}));
+D.stations.forEach((s,i) => IDX.push({type:'st', t:`תחנת ${s.name}`, s:s.people.map(p=>p.name).filter(Boolean).join(', '), extra:s.region+' '+s.notes.join(' '), go:`#stations/${i}`, icon:'warehouse'}));
+D.videos.forEach(c => c.items.forEach(it => IDX.push({type:'vid', t:it.title, s:c.title, url:it.url, icon: ytInfo(it.url)?'play':'arrow-square-out'})));
+D.app.forEach(it => IDX.push({type:'vid', t:it.title, s:'אפליקציית המתנדבים', url:it.url, icon:'device-mobile'}));
+MAPS.forEach(m => IDX.push({type:'map', t:'מפת ' + m.t, s:'מפות עזר', url:m.url, icon:m.i}));
+D.manuals.forEach(m => IDX.push({type:'man', t:'ספר רכב: '+m.title, s:'איתור ספר-רכב', url:m.url, icon:'book-open-text'}));
+IDX.forEach(x => x.n = norm(`${x.t} ${x.s} ${x.extra||''}`));
+const GROUPS = [['map','מפות עזר'],['vid','סרטונים'],['prov',"פנצ'ריות ניידות"],['st','השאלת צמיגים'],['rule','נהלים'],['man','ספרי רכב']];
+
+function hl(text, toks){
+  let out = esc(text);
+  toks.filter(t=>t.length>1).forEach(t => {
+    const re = new RegExp('(' + t.replace(/[.*+?^${}()|[\]\\]/g,'\\$&') + ')', 'gi');
+    out = out.replace(re, '<mark>$1</mark>');
+  });
+  return out;
+}
+function search(q){
+  const toks = norm(q).split(' ').filter(Boolean);
+  const box = $('#sbox'); box.classList.toggle('has', !!q);
+  $('#homeBody').style.display = toks.length ? 'none' : '';
+  if (!toks.length) { $('#results').innerHTML=''; return; }
+  const hits = IDX.filter(x => toks.every(t => x.n.includes(t)));
+  if (!hits.length) {
+    $('#results').innerHTML = `<div class="empty"><b>לא נמצאו תוצאות ל"${esc(q)}"</b>נסו מילה אחת, שם יצרן (למשל "יונדאי") או שם עיר. אפשר גם לפנות <a href="https://wa.me/972500000001" target="_blank" rel="noopener">למדריך הארצי</a>.</div>`;
+    return;
+  }
+  $('#results').innerHTML = GROUPS.map(([k,label]) => {
+    const g = hits.filter(h=>h.type===k); if (!g.length) return '';
+    const shown = g.slice(0, k==='rule'?6:12);
+    return `<div class="rgroup"><h3>${label} (${g.length})</h3>${shown.map(h => {
+      const attrs = h.type==='vid' && ytInfo(h.url) ? `data-play="${esc(h.url)}" data-title="${esc(h.t)}" data-cat="${esc(h.s)}"` : '';
+      const inner = `<span class="ri"><i class="ph ph-${h.icon}"></i></span><span><span class="rt">${hl(h.t,toks)}</span><span class="rs">${hl(h.s,toks)}</span></span>`;
+      if (attrs) return `<button class="ritem" ${attrs}>${inner}</button>`;
+      if (h.url) return `<a class="ritem" href="${esc(h.url)}" target="_blank" rel="noopener">${inner}</a>`;
+      return `<a class="ritem" href="${h.go}">${inner}</a>`;
+    }).join('')}</div>`;
+  }).join('');
+}
+const q = $('#q');
+q.addEventListener('input', () => search(q.value));
+$('#qClear').onclick = () => { q.value=''; search(''); q.focus(); };
+function focusSearch(){ if (location.hash.replace('#','').split('/')[0] !== 'home' && location.hash) location.hash = '#home'; setTimeout(()=>{ q.focus(); q.select(); }, 30); }
+document.querySelectorAll('[data-search]').forEach(b => b.onclick = focusSearch);
+document.addEventListener('keydown', e => {
+  if (e.key === '/' && !/INPUT|TEXTAREA/.test(document.activeElement.tagName)) { e.preventDefault(); focusSearch(); }
+  if (e.key === 'Escape' && document.activeElement === q && q.value) { q.value=''; search(''); }
+});
+
+/* ---------- router ---------- */
+function flash(el){ if(!el) return; el.classList.remove('flash'); void el.offsetWidth; el.classList.add('flash'); }
+function route(){
+  const [v='home', a, b] = location.hash.replace('#','').split('/');
+  const view = VIEWS.some(x=>x.id===v) ? v : 'home';
+  const toMaps = v === 'maps';
+  document.querySelectorAll('.view').forEach(s => s.classList.toggle('on', s.id === 'v-'+view));
+  document.querySelectorAll('[data-v]').forEach(n => { if(n.dataset.v===view) n.setAttribute('aria-current','page'); else n.removeAttribute('aria-current'); });
+  document.title = view==='home' ? 'מדריך שטח' : `${VIEWS.find(x=>x.id===view).label} | מדריך שטח`;
+  let target = null;
+  if (view==='rules' && a!=null) target = b!=null ? document.getElementById(`${slug(a)}-${b}`) : document.getElementById(slug(a));
+  if (view==='tires' && a!=null){ if (provRegion!=='הכל' && D.providers[a].region!==provRegion){ provRegion='הכל'; renderProviders(); } target = document.getElementById('p'+a); }
+  if (view==='stations' && a!=null){ if (stRegion!=='הכל'){ stRegion='הכל'; renderStations(); } target = document.getElementById('s'+a); }
+  if (view==='videos' && a!=null){ if (vq){ vq=''; $('#vq').value=''; renderVideos(); } target = a==='manuals' ? $('#manuals') : document.getElementById('vc'+a); }
+  if (toMaps){ if (q.value){ q.value=''; search(''); } target = document.getElementById('maps'); }
+  if (target){ requestAnimationFrame(()=>{ target.scrollIntoView({block: b!=null||view==='tires'||view==='stations' ? 'center':'start'}); if (b!=null||view==='tires'||view==='stations') flash(target); }); }
+  else window.scrollTo(0,0);
+}
+addEventListener('hashchange', route);
+route();
+
+/* active chip while scrolling rules & videos (IntersectionObserver, no scroll listeners) */
+function spy(sectionSel, chipSel, attr){
+  const chips = () => document.querySelectorAll(chipSel);
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(en => { if (en.isIntersecting){
+      const key = en.target.id.replace(/^(g|vc)/,'');
+      chips().forEach(c => { const on = c.getAttribute(attr) === key; c.classList.toggle('on', on); if (on) c.scrollIntoView({inline:'nearest', block:'nearest'}); });
+    }});
+  }, {rootMargin:'-140px 0px -60% 0px'});
+  document.querySelectorAll(sectionSel).forEach(s => io.observe(s));
+  return io;
+}
+spy('#ruleGroups > section', '#ruleChips .chip', 'data-rc');
+let vio = spy('#vidList > section', '#vidChips .chip', 'data-vc');
+$('#vq').addEventListener('input', () => { vio.disconnect(); vio = spy('#vidList > section', '#vidChips .chip', 'data-vc'); });
+</script>
+</body>
+</html>
